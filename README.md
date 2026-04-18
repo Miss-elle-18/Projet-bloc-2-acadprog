@@ -1,5 +1,5 @@
 # DevStart Agency — Analyse de Code
-# Bloc 2 · Module 1 · Académie de Programmation IFRI L1 · 2024-2025
+# Bloc 2 · Module 1 · Académie de Programmation
 
 
 # Contexte du projet
