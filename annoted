@@ -1,0 +1,406 @@
+<!doctype html>
+<!--
+  FICHIER : index.html
+  PROJET  : DevStart Agency — Page d'accueil
+  ANALYSE : Bloc 2 · Module 1 · Académie de Programmation IFRI L1
+
+  DESCRIPTION GLOBALE :
+  Ce fichier constitue la page d'accueil complète du site de l'agence DevStart.
+  Il est structuré en 7 sections distinctes empilées verticalement :
+    1. Barre de navigation (b1)
+    2. Section héro / accueil (c)
+    3. Section services (d)
+    4. Section "À propos" (e)
+    5. Section témoignages (f)
+    6. Formulaire de contact (g)
+    7. Pied de page / footer (h)
+
+  PROBLÈMES IDENTIFIÉS (voir rapport pour détail complet) :
+    - Noms de classes non sémantiques (b1, c, d, e, f, g, h...)
+    - Liens de navigation non renseignés (tous "#")
+    - Balise <html> sans attribut lang=""
+    - Pas de balise <meta charset> ni <meta viewport>
+    - Email dans le footer rendu illisible par un script anti-spam (Cloudflare)
+    - Pas de balises sémantiques HTML5 (<nav>, <header>, <main>, <section>, <footer>)
+    - Formulaire de contact sans attribut action="" ni method="" : ne fait rien
+    - Champ email utilise type="text" au lieu de type="email"
+    - Images sans attribut alt="" : inaccessibles
+    - Pas de responsive design (pas de media queries)
+-->
+<html>
+  <head>
+    <title>site</title>
+    <!-- PROBLÈME : Titre peu descriptif. Devrait être "DevStart Agency" ou similaire -->
+
+    <!-- PROBLÈME : Il manque ces deux lignes essentielles :
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      Sans elles, les caractères spéciaux peuvent être mal affichés et
+      le site ne s'adapte pas aux écrans mobiles. -->
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <!--
+    SECTION 1 — BARRE DE NAVIGATION
+    Classe utilisée : .b1 (non sémantique — devrait être "navbar" ou "header")
+    
+    RÔLE : Affiche le logo de l'agence à gauche et 4 liens de navigation à droite.
+    
+    PROBLÈMES :
+      - .b1 / .b1a / .b1b : noms de classes cryptiques, sans sens métier
+      - Les 4 liens ("acc", "nous", "serv", "cont") sont des abréviations
+        incompréhensibles. Signification probable : Accueil, À propos (nous),
+        Services, Contact.
+      - Tous les href="#" : aucun lien ne fonctionne réellement.
+      - Devrait utiliser <nav> et <header> pour la sémantique HTML5.
+-->
+    <div class="b1">
+      <!-- Logo / nom de l'agence -->
+      <div class="b1a">DevStart</div>
+
+      <!-- Menu de navigation avec 4 liens non fonctionnels -->
+      <div class="b1b">
+        <a href="#">acc</a>
+        <!-- "Accueil" probablement -->
+        <a href="#">nous</a>
+        <!-- "À propos de nous" probablement -->
+        <a href="#">serv</a>
+        <!-- "Services" probablement -->
+        <a href="#">cont</a>
+        <!-- "Contact" probablement -->
+      </div>
+    </div>
+
+    <!--
+    SECTION 2 — SECTION HÉRO (bannière principale)
+    Classe utilisée : .c (non sémantique — devrait être "hero" ou "banner")
+
+    RÔLE : Section d'accroche visuelle. Contient un texte principal à gauche
+            et une image illustrative à droite. C'est la première chose que
+            l'utilisateur voit en arrivant sur le site.
+
+    STRUCTURE :
+      .c        : conteneur flex (2 colonnes côte à côte)
+        .c1     : colonne gauche (texte)
+          .c1a  : titre principal (H1 implicite)
+          .c1b  : sous-titre / description
+          .c1c  : bouton d'appel à l'action (CTA)
+        .c2     : colonne droite (image)
+    
+    PROBLÈMES :
+      - .c, .c1, .c1a, .c1b, .c1c, .c2 : noms sans signification
+      - L'image "hero.png" n'a pas d'attribut alt="" : inaccessible pour
+        les lecteurs d'écran et les moteurs de recherche
+      - Le "bouton" Commencer est un <a>, pas un <button> — acceptable,
+        mais le href="#" ne pointe nulle part
+      - Le titre devrait être une balise <h1> pour le SEO, pas un <div>
+-->
+    <div class="c">
+      <!-- Colonne gauche : texte d'accroche -->
+      <div class="c1">
+        <!-- Titre principal de la page (devrait être un <h1>) -->
+        <div class="c1a">On construit vos rêves numériques</div>
+
+        <!-- Description / sous-titre -->
+        <div class="c1b">
+          Agence web spécialisée dans la création de sites modernes et
+          performants pour les entreprises qui veulent se démarquer.
+        </div>
+
+        <!-- Bouton CTA (Call To Action) — lien vers une page de contact ou formulaire -->
+        <div class="c1c"><a href="#">Commencer</a></div>
+      </div>
+
+      <!-- Colonne droite : image illustrative (hero.png non fourni dans le projet) -->
+      <div class="c2">
+        <!-- PROBLÈME : alt="" manquant. Ex correct : alt="Illustration de l'équipe DevStart au travail" -->
+        <img src="hero.png" />
+      </div>
+    </div>
+
+    <!--
+    SECTION 3 — SERVICES
+    Classe utilisée : .d (non sémantique — devrait être "services")
+
+    RÔLE : Présente les 4 prestations principales de l'agence sous forme
+            de cartes (cards) affichées en grille horizontale.
+
+    STRUCTURE :
+      .d        : conteneur de la section
+        .d0     : titre de section "Ce qu'on fait"
+        .dd     : conteneur flex des 4 cartes
+          .d1   : carte Design
+          .d2   : carte Développement
+          .d3   : carte Marketing digital
+          .d4   : carte Maintenance
+        
+        Chaque carte (ex: .d1) contient :
+          .d1i  : emoji / icône
+          .d1t  : titre de la carte
+          .d1p  : paragraphe descriptif
+
+    PROBLÈMES :
+      - Nommage illisible : .d, .d0, .dd, .d1, .d1i, .d1t, .d1p...
+      - Les 4 cartes sont des blocs identiques avec des classes différentes
+        (.d1, .d2, .d3, .d4) alors qu'une seule classe "card" suffirait.
+        : Duplication de code inutile dans le CSS (32 règles au lieu de 8)
+      - Les titres de carte devraient être des <h3>, pas des <div>
+-->
+    <div class="d">
+      <!-- Titre de la section -->
+      <div class="d0">Ce qu'on fait</div>
+
+      <!-- Grille des 4 cartes de services (affichées côte à côte via flexbox) -->
+      <div class="dd">
+        <!-- Carte 1 : Service Design -->
+        <div class="d1">
+          <div class="d1i">🎨</div>
+          <!-- Icône emoji -->
+          <div class="d1t">Design</div>
+          <!-- Titre du service -->
+          <div class="d1p">
+            On crée des interfaces belles et modernes adaptées à votre marque.
+          </div>
+        </div>
+
+        <!-- Carte 2 : Service Développement -->
+        <div class="d2">
+          <div class="d2i">💻</div>
+          <div class="d2t">Développement</div>
+          <div class="d2p">
+            Sites rapides, propres et bien codés pour tous les écrans.
+          </div>
+        </div>
+
+        <!-- Carte 3 : Service Marketing digital -->
+        <div class="d3">
+          <div class="d3i">📈</div>
+          <div class="d3t">Marketing digital</div>
+          <div class="d3p">
+            Stratégies SEO et réseaux sociaux pour booster votre visibilité.
+          </div>
+        </div>
+
+        <!-- Carte 4 : Service Maintenance -->
+        <div class="d4">
+          <div class="d4i">🔧</div>
+          <div class="d4t">Maintenance</div>
+          <div class="d4p">
+            Suivi et mises à jour régulières pour que votre site reste au top.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--
+    SECTION 4 — À PROPOS
+    Classe utilisée : .e (non sémantique — devrait être "about")
+
+    RÔLE : Présente l'agence : qui elle est, depuis quand, avec quelle équipe.
+            Mise en page en deux colonnes : image à gauche, texte à droite.
+
+    STRUCTURE :
+      .e        : conteneur flex 2 colonnes
+        .e1     : colonne gauche (image d'équipe)
+        .e2     : colonne droite (texte)
+          .e2t  : titre "À propos de nous"
+          .e2p  : paragraphes descriptifs (x2)
+          .e2b  : bouton "Notre histoire"
+
+    PROBLÈMES :
+      - Même problème de nommage que les autres sections
+      - Image team.png sans attribut alt=""
+      - .e2p est utilisé deux fois pour deux paragraphes différents — correct
+        techniquement (même style), mais mérite un commentaire dans le code
+      - Le bouton "Notre histoire" ne mène nulle part (href="#")
+-->
+    <div class="e">
+      <!-- Colonne gauche : photo de l'équipe -->
+      <div class="e1">
+        <!-- PROBLÈME : alt="" manquant. Ex : alt="L'équipe DevStart Agency" -->
+        <img src="team.png" class="eimg" />
+      </div>
+
+      <!-- Colonne droite : texte de présentation -->
+      <div class="e2">
+        <!-- Titre de la section (devrait être <h2>) -->
+        <div class="e2t">À propos de nous</div>
+
+        <!-- Paragraphe 1 : historique et taille de l'équipe -->
+        <div class="e2p">
+          DevStart Agency est une jeune agence fondée par des passionnés du
+          numérique. Notre équipe de 8 personnes accompagne les entreprises dans
+          leur transformation digitale depuis 2021.
+        </div>
+
+        <!-- Paragraphe 2 : valeur / philosophie de l'agence -->
+        <div class="e2p">
+          On croit que chaque entreprise mérite un site web qui lui ressemble
+          vraiment.
+        </div>
+
+        <!-- Bouton secondaire (lien vers une page "À propos" complète — non existante) -->
+        <div class="e2b"><a href="#">Notre histoire</a></div>
+      </div>
+    </div>
+
+    <!--
+    SECTION 5 — TÉMOIGNAGES CLIENTS
+    Classe utilisée : .f (non sémantique — devrait être "testimonials")
+
+    RÔLE : Affiche 3 avis de clients satisfaits pour crédibiliser l'agence.
+            Fond sombre pour contraster avec les sections précédentes.
+
+    STRUCTURE :
+      .f        : conteneur de section (fond sombre #1a1a2e)
+        .f0     : titre "Ils nous font confiance"
+        .ff     : conteneur flex des 3 témoignages
+          .f1   : témoignage de Koffi A. (BenTech)
+          .f2   : témoignage de Mariame D. (ModoShop)
+          .f3   : témoignage de Romuald S. (GreenFood Bénin)
+        
+        Chaque bloc (.f1, .f2, .f3) contient :
+          .f1t  : texte du témoignage (en italique)
+          .f1n  : nom et poste du client
+
+    PROBLÈMES :
+      - Même problème de nommage et duplication de classes CSS
+      - Les guillemets dans les témoignages sont des guillemets droits ("...")
+        au lieu de guillemets typographiques français (« ... »)
+      - Pas de balise <blockquote> pour les citations — problème sémantique
+-->
+    <div class="f">
+      <!-- Titre de la section -->
+      <div class="f0">Ils nous font confiance</div>
+
+      <!-- Grille des 3 témoignages -->
+      <div class="ff">
+        <!-- Témoignage 1 : Koffi A., Directeur de BenTech -->
+        <div class="f1">
+          <!-- Texte du témoignage (devrait être un <blockquote>) -->
+          <div class="f1t">
+            "Excellent travail, livré en temps et en heure. Notre site a doublé
+            notre taux de conversion."
+          </div>
+          <!-- Identité de l'auteur -->
+          <div class="f1n">— Koffi A., Directeur, BenTech</div>
+        </div>
+
+        <!-- Témoignage 2 : Mariame D., CEO de ModoShop -->
+        <div class="f2">
+          <div class="f2t">
+            "Une équipe sérieuse et à l'écoute. Je recommande sans hésiter."
+          </div>
+          <div class="f2n">— Mariame D., CEO, ModoShop</div>
+        </div>
+
+        <!-- Témoignage 3 : Romuald S., Fondateur de GreenFood Bénin -->
+        <div class="f3">
+          <div class="f3t">
+            "Ils ont compris notre vision dès le premier rendez-vous. Résultat
+            impeccable."
+          </div>
+          <div class="f3n">— Romuald S., Fondateur, GreenFood Bénin</div>
+        </div>
+      </div>
+    </div>
+
+    <!--
+    SECTION 6 — FORMULAIRE DE CONTACT
+    Classe utilisée : .g (non sémantique — devrait être "contact")
+
+    RÔLE : Permet aux visiteurs d'envoyer un message à l'agence.
+
+    STRUCTURE :
+      .g        : conteneur de section
+        .g0     : titre "Contactez-nous"
+        .gf     : formulaire (flex colonne, centré, max-width 600px)
+          .gi   : 3 champs input (Nom, Email, Sujet)
+          .gt   : zone de texte "message" (textarea)
+          .gb   : bouton Envoyer
+
+    PROBLÈMES CRITIQUES :
+      Le formulaire n'a PAS de balise <form> : les champs sont des inputs
+        isolés. Il n'y a ni action="" ni method="" : le bouton "Envoyer"
+        ne fait RIEN. Le formulaire est entièrement non fonctionnel.
+      Le champ email utilise type="text" au lieu de type="email" :
+        aucune validation du format email.
+      Pas de labels associés aux inputs : inaccessible (lecteurs d'écran).
+      Pas de validation côté client (required, pattern...).
+    -->
+    <div class="g">
+      <!-- Titre de la section -->
+      <div class="g0">Contactez-nous</div>
+
+      <!-- 
+    PROBLÈME CRITIQUE : ce .gf devrait être une balise <form> avec :
+    <form action="/send-message" method="POST" class="gf">
+    Sans cela, les données ne sont jamais envoyées.
+  -->
+      <div class="gf">
+        <!-- Champ Nom complet -->
+        <input type="text" placeholder="Nom complet" class="gi" />
+
+        <!-- PROBLÈME : type="text" devrait être type="email" pour valider le format -->
+        <input type="text" placeholder="Email" class="gi" />
+
+        <!-- Champ Sujet -->
+        <input type="text" placeholder="Sujet" class="gi" />
+
+        <!-- Zone de message multi-lignes -->
+        <textarea placeholder="Votre message..." class="gt"></textarea>
+
+        <!-- Bouton de soumission — ne fait rien car pas de <form> parent -->
+        <button class="gb">Envoyer</button>
+      </div>
+    </div>
+
+    <!-- 
+    SECTION 7 — PIED DE PAGE (FOOTER)
+    Classe utilisée : .h (non sémantique — devrait être "footer" ou utiliser <footer>)
+
+    RÔLE : Affiche le copyright, les liens vers les réseaux sociaux et
+            l'adresse email de contact de l'agence.
+
+    STRUCTURE :
+      .h        : conteneur flex (fond très sombre #0f0f1a)
+        .h1     : texte copyright "DevStart Agency © 2024"
+        .h2     : liens réseaux sociaux (Facebook, Instagram, LinkedIn)
+        .h3     : adresse email de contact (obfusquée par Cloudflare)
+
+    PROBLÈMES :
+      - L'email dans .h3 est rendu illisible par un script d'obfuscation
+        Cloudflare (__cf_email). Cela signifie que le code a été copié
+        depuis un site en ligne (via "Enregistrer sous") plutôt qu'écrit
+        depuis zéro — ce qui est suspect.
+      - Les liens réseaux sociaux ne pointent pas vers de vraies pages (href="#")
+      - Devrait utiliser la balise <footer> pour la sémantique
+-->
+    <div class="h">
+      <!-- Copyright -->
+      <div class="h1">DevStart Agency &copy; 2024</div>
+
+      <!-- Liens réseaux sociaux (tous non fonctionnels) -->
+      <div class="h2">
+        <a href="#">Facebook</a>
+        <a href="#">Instagram</a>
+        <a href="#">LinkedIn</a>
+      </div>
+
+      <!-- 
+    PROBLÈME : L'email ci-dessous est obfusqué par Cloudflare.
+    Le texte original était probablement : contact@devstart.agency
+    ou similaire. Ce genre d'obfuscation apparaît quand on copie-colle
+    une page web au lieu d'écrire le code soi-même.
+  -->
+      <div class="h3">
+        <!-- Email obfusqué — non lisible en clair dans le code source -->
+        <a href="/cdn-cgi/l/email-protection" class="__cf_email__"
+          >[email protected]</a
+        >
+      </div>
+    </div>
+  </body>
+</html>
