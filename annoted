@@ -404,3 +404,512 @@
     </div>
   </body>
 </html>
+
+
+/*
+  FICHIER : style.css
+  PROJET  : DevStart Agency — Page d'accueil
+  ANALYSE : Bloc 2 · Module 1 · Académie de Programmation IFRI L1
+
+  DESCRIPTION GLOBALE :
+  Cette feuille de style définit l'apparence visuelle de toute la page.
+  Elle est organisée en blocs correspondant aux sections du HTML, dans
+  l'ordre d'apparition de la page (nav : hero : services : about : 
+  témoignages : contact : footer).
+
+  PALETTE DE COULEURS utilisée :
+    #1a1a2e : Bleu marine foncé (couleur principale, fond nav, titres)
+    #16213e : Bleu marine plus foncé (fond cartes témoignages)
+    #0f0f1a : Noir bleuté (fond footer)
+    #e94560 : Rouge/rose vif (couleur d'accent, boutons, bordures)
+    #f9f9f9 : Gris très clair (fonds de sections claires)
+    #f0f0f5 : Gris lavande clair (fond section "À propos")
+    #f4f4f4 : Gris léger (fond des cartes services)
+    #555    : Gris moyen (textes secondaires)
+    #666    : Gris (textes descriptifs des cartes)
+    #ccc    : Gris clair (liens nav, textes footer)
+    white   : Blanc (textes sur fonds sombres)
+
+  PROBLÈMES GLOBAUX IDENTIFIÉS :
+    1. Aucune media query : pas de responsive design (site cassé sur mobile)
+    2. Noms de classes cryptiques hérités du HTML (b1, c, d, e, f, g, h)
+    3. Duplication massive : les cartes services (.d1 à .d4) et les 
+      témoignages (.f1 à .f3) ont exactement les mêmes propriétés CSS 
+      répétées 4x et 3x inutilement.
+    4. Pas de variables CSS (--color-primary, --color-accent...) alors que
+      les couleurs se répètent de nombreuses fois.
+    5. Le font-family ne spécifie pas de police de fallback sécurisée.
+  
+*/
+
+/* 
+  RESET GLOBAL
+  Supprime les marges et paddings par défaut de tous les éléments.
+  C'est une pratique courante mais très agressive — une approche plus
+  moderne serait d'utiliser box-sizing: border-box aussi.
+*/
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* 
+  STYLES DE BASE DU BODY
+  Police : Arial (sans-serif, lisible)
+  Couleur de texte : #333 (gris foncé, plus doux que le noir pur)
+  
+  PROBLÈME : font-family sans fallback. Devrait être :
+  font-family: Arial, Helvetica, sans-serif;
+*/
+body {
+  font-family: Arial;
+  color: #333;
+}
+
+/* 
+  SECTION 1 — BARRE DE NAVIGATION (.b1)
+  
+  RÔLE : Barre fixe en haut de page, fond bleu marine, contenu étalé
+          horizontalement (logo à gauche, liens à droite) via flexbox.
+  
+  PROBLÈME : Nom de classe .b1 illisible. Devrait être .navbar ou .header.
+*/
+
+/* Conteneur principal de la navigation */
+.b1 {
+  background: #1a1a2e; /* Fond bleu marine foncé */
+  padding: 18px 60px; /* Espacement interne (haut/bas : 18px, gauche/droite : 60px) */
+  display: flex; /* Disposition flexible : logo et liens côte à côte */
+  justify-content: space-between; /* Logo à gauche, liens à droite */
+  align-items: center; /* Centrage vertical */
+}
+
+/* Logo / nom de l'agence */
+.b1a {
+  color: white;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+/* Liens de navigation */
+.b1b a {
+  color: #ccc; /* Gris clair par défaut */
+  text-decoration: none; /* Retire le soulignement */
+  margin-left: 25px; /* Espacement entre les liens */
+  font-size: 14px;
+}
+
+/* État au survol des liens de navigation */
+.b1b a:hover {
+  color: white; /* Passe au blanc au survol */
+}
+
+/* 
+  SECTION 2 — HÉRO / BANNIÈRE PRINCIPALE (.c)
+  
+  RÔLE : Section d'accroche en deux colonnes (texte + image).
+          Fond gris très clair pour contraster avec la nav sombre.
+  
+  PROBLÈME : .c, .c1, .c1a, .c1b, .c1c, .c2 sont tous illisibles.
+              Devraient être .hero, .hero-content, .hero-title, etc.
+    */
+
+/* Conteneur du héro : 2 colonnes flexbox */
+.c {
+  display: flex;
+  align-items: center; /* Aligne verticalement au centre */
+  padding: 80px 60px; /* Grand espace vertical pour aérer la section */
+  background: #f9f9f9;
+  gap: 40px; /* Espace entre la colonne texte et l'image */
+}
+
+/* Colonne gauche du héro (prend tout l'espace disponible) */
+.c1 {
+  flex: 1; /* Prend 1 part de l'espace disponible */
+}
+
+/* Titre principal du héro (devrait être un <h1> dans le HTML) */
+.c1a {
+  font-size: 38px;
+  font-weight: bold;
+  color: #1a1a2e;
+  line-height: 1.3; /* Interligne à 130% de la taille de police */
+  margin-bottom: 20px;
+}
+
+/* Sous-titre / description du héro */
+.c1b {
+  font-size: 16px;
+  color: #555;
+  line-height: 1.7; /* Interligne généreux pour la lisibilité */
+  margin-bottom: 30px;
+}
+
+/* Bouton CTA (Call To Action) "Commencer" */
+.c1c a {
+  background: #e94560; /* Rouge/rose vif — couleur d'accent */
+  color: white;
+  padding: 14px 32px;
+  border-radius: 6px; /* Coins légèrement arrondis */
+  text-decoration: none;
+  font-weight: bold;
+  /* NOTE : display: inline-block manque — peut causer des comportements inattendus */
+}
+
+/* Image du héro (colonne droite) */
+.c2 img {
+  width: 100%; /* Prend toute la largeur de son conteneur */
+  max-width: 480px; /* Mais ne dépasse pas 480px */
+  border-radius: 12px; /* Coins arrondis pour un look moderne */
+}
+
+/* 
+  SECTION 3 — SERVICES (.d)
+  
+  RÔLE : 4 cartes de services affichées en ligne.
+  
+  PROBLÈME MAJEUR DE DUPLICATION :
+  Les 4 cartes (.d1, .d2, .d3, .d4) ont exactement les mêmes styles.
+  Une seule classe .service-card aurait suffi, ce qui aurait réduit le CSS
+  de ~48 lignes à ~12 lignes pour les cartes.
+  Même constat pour les icônes (.d1i à .d4i), titres (.d1t à .d4t),
+  et paragraphes (.d1p à .d4p).
+    */
+
+/* Conteneur de la section services */
+.d {
+  padding: 70px 60px;
+  background: white;
+}
+
+/* Titre de la section "Ce qu'on fait" */
+.d0 {
+  font-size: 28px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 40px;
+  color: #1a1a2e;
+}
+
+/* Conteneur flex des 4 cartes */
+.dd {
+  display: flex;
+  gap: 24px; /* Espacement entre les cartes */
+}
+
+/* ---- Les 4 cartes de service (styles identiques, répétés inutilement) ---- */
+/* SUGGESTION : remplacer ces 4 sélecteurs par une seule classe .service-card */
+.d1,
+.d2,
+.d3,
+.d4 {
+  flex: 1; /* Chaque carte prend une part égale de l'espace */
+  background: #f4f4f4;
+  padding: 28px 22px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+/* Icônes emoji des cartes (styles identiques répétés 4x) */
+/* SUGGESTION : utiliser une seule classe .service-icon */
+.d1i,
+.d2i,
+.d3i,
+.d4i {
+  font-size: 36px;
+  margin-bottom: 14px;
+}
+
+/* Titres des cartes (styles identiques répétés 4x) */
+/* SUGGESTION : utiliser une seule classe .service-title */
+.d1t,
+.d2t,
+.d3t,
+.d4t {
+  font-size: 17px;
+  font-weight: bold;
+  color: #1a1a2e;
+  margin-bottom: 10px;
+}
+
+/* Textes descriptifs des cartes (styles identiques répétés 4x) */
+/* SUGGESTION : utiliser une seule classe .service-desc */
+.d1p,
+.d2p,
+.d3p,
+.d4p {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.6;
+}
+
+/* 
+  SECTION 4 — À PROPOS (.e)
+  
+  RÔLE : Section 2 colonnes — image à gauche, texte à droite.
+          Fond légèrement lavande pour différencier des sections blanches.
+    */
+
+/* Conteneur de la section "À propos" */
+.e {
+  display: flex;
+  padding: 70px 60px;
+  background: #f0f0f5; /* Gris lavande léger */
+  gap: 50px;
+  align-items: center;
+}
+
+/* Colonne gauche : image */
+.e1 {
+  flex: 1;
+}
+
+/* Image de l'équipe */
+.eimg {
+  width: 100%;
+  border-radius: 12px;
+  /* NOTE : .eimg est nommé différemment des autres éléments (.e1img serait cohérent) */
+}
+
+/* Colonne droite : texte */
+.e2 {
+  flex: 1;
+}
+
+/* Titre "À propos de nous" */
+.e2t {
+  font-size: 28px;
+  font-weight: bold;
+  color: #1a1a2e;
+  margin-bottom: 18px;
+}
+
+/* Paragraphes de description (utilisé 2 fois dans le HTML) */
+.e2p {
+  font-size: 15px;
+  color: #555;
+  line-height: 1.7;
+  margin-bottom: 14px;
+}
+
+/* Conteneur du bouton "Notre histoire" */
+.e2b a {
+  display: inline-block;
+  margin-top: 10px;
+  background: #1a1a2e; /* Fond bleu marine (vs rouge pour le CTA principal) */
+  color: white;
+  padding: 12px 26px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* 
+  SECTION 5 — TÉMOIGNAGES (.f)
+  
+  RÔLE : 3 cartes de témoignages sur fond sombre.
+          Le fond sombre crée une rupture visuelle dans la page.
+  
+  PROBLÈME DE DUPLICATION : identique à la section services.
+  .f1, .f2, .f3 ont les mêmes styles (répétés 3x).
+  .f1t, .f2t, .f3t aussi. .f1n, .f2n, .f3n aussi.
+  Une classe .testimonial-card suffirait.
+    */
+
+/* Conteneur de la section témoignages */
+.f {
+  padding: 70px 60px;
+  background: #1a1a2e; /* Fond bleu marine — section sombre */
+}
+
+/* Titre de la section */
+.f0 {
+  font-size: 28px;
+  font-weight: bold;
+  color: white; /* Texte blanc sur fond sombre */
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+/* Conteneur flex des 3 cartes témoignages */
+.ff {
+  display: flex;
+  gap: 24px;
+}
+
+/* Les 3 cartes témoignages (styles identiques répétés 3x) */
+/* SUGGESTION : une seule classe .testimonial-card */
+.f1,
+.f2,
+.f3 {
+  flex: 1;
+  background: #16213e; /* Bleu marine encore plus foncé que le fond */
+  padding: 28px;
+  border-radius: 10px;
+  border-left: 4px solid #e94560; /* Bordure rouge/rose à gauche — signature visuelle */
+}
+
+/* Textes des témoignages (en italique, gris clair) */
+.f1t,
+.f2t,
+.f3t {
+  font-size: 14px;
+  color: #ccc;
+  line-height: 1.7;
+  font-style: italic;
+  margin-bottom: 16px;
+}
+
+/* Noms des clients (en rouge/rose vif) */
+.f1n,
+.f2n,
+.f3n {
+  font-size: 13px;
+  color: #e94560; /* Couleur d'accent — rouge/rose */
+  font-weight: bold;
+}
+
+/* 
+  SECTION 6 — FORMULAIRE DE CONTACT (.g)
+  
+  RÔLE : Formulaire centré de prise de contact.
+          Fond gris clair pour revenir à un ton clair après la section sombre.
+    */
+
+/* Conteneur de la section contact */
+.g {
+  padding: 70px 60px;
+  background: #f9f9f9;
+}
+
+/* Titre "Contactez-nous" */
+.g0 {
+  font-size: 28px;
+  font-weight: bold;
+  color: #1a1a2e;
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+/* Conteneur du formulaire — centré, largeur maximale 600px */
+.gf {
+  max-width: 600px;
+  margin: 0 auto; /* Centrage horizontal automatique */
+  display: flex;
+  flex-direction: column; /* Champs empilés verticalement */
+  gap: 16px; /* Espace entre chaque champ */
+}
+
+/* Champs de saisie texte (Nom, Email, Sujet) */
+.gi {
+  padding: 14px 16px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none; /* Retire le contour bleu par défaut au focus */
+  /* NOTE : supprimer outline sans alternative CSS :focus nuit à l'accessibilité */
+}
+
+/* Zone de texte "Votre message" */
+.gt {
+  padding: 14px 16px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  height: 140px; /* Hauteur fixe de départ */
+  resize: vertical; /* L'utilisateur peut redimensionner verticalement */
+  outline: none; /* Même problème d'accessibilité que .gi */
+}
+
+/* Bouton "Envoyer" */
+.gb {
+  background: #e94560; /* Rouge/rose — cohérent avec le CTA du héro */
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer; /* Curseur en forme de main au survol */
+}
+
+/* État au survol du bouton */
+.gb:hover {
+  background: #c73652; /* Teinte rouge plus foncée : feedback visuel */
+}
+
+/* 
+  SECTION 7 — PIED DE PAGE / FOOTER (.h)
+  
+  RÔLE : Barre basse avec copyright, liens réseaux sociaux et email.
+          Fond très sombre pour clôturer la page.
+  
+  NOTE : .h est le nom le plus court et le moins descriptif possible.
+          "footer" serait évident et standard.
+    */
+
+/* Conteneur du footer */
+.h {
+  background: #0f0f1a; /* Presque noir — plus sombre que la nav */
+  padding: 30px 60px;
+  display: flex;
+  justify-content: space-between; /* 3 éléments répartis uniformément */
+  align-items: center;
+}
+
+/* Texte de copyright */
+.h1 {
+  color: #aaa; /* Gris clair sur fond sombre */
+  font-size: 13px;
+}
+
+/* Liens réseaux sociaux */
+.h2 a {
+  color: #aaa;
+  text-decoration: none;
+  margin-left: 18px;
+  font-size: 13px;
+}
+
+/* Survol des liens réseaux sociaux */
+.h2 a:hover {
+  color: white;
+}
+
+/* Bloc email de contact */
+.h3 {
+  color: #aaa;
+  font-size: 13px;
+  /* NOTE : L'email dans ce bloc est obfusqué par Cloudflare dans le HTML.
+    Ce style s'applique à l'email, mais l'email lui-même est illisible
+     dans le code source HTML. */
+}
+
+/*
+  
+  RÉSUMÉ DES PROBLÈMES CSS
+  
+
+  CRITIQUE :
+    - Aucune media query : le site n'est pas responsive.
+      Sur mobile, toutes les sections flex s'affichent en colonnes
+      illisibles car aucun breakpoint n'est défini.
+
+  MAJEUR :
+    - Duplication massive :
+        .d1 à .d4 : 4 règles identiques (48 lignes : 12 suffiraient)
+        .d1i à .d4i : identiques
+        .d1t à .d4t : identiques
+        .d1p à .d4p : identiques
+        .f1 à .f3 : identiques
+        .f1t à .f3t : identiques
+        .f1n à .f3n : identiques
+      Total : ~80 lignes de CSS inutiles
+
+  MINEUR :
+    - Pas de variables CSS pour les couleurs répétées (#1a1a2e, #e94560...)
+    - font-family sans fallback
+    - outline: none sans :focus-visible alternatif (accessibilité)
+    - Pas de transition sur les :hover (ex: transition: background 0.2s)
+*/
+
